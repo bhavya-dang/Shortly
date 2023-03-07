@@ -1,0 +1,31 @@
+{
+  "name": "shortly",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "db": "node index.js"
+  },
+  "dependencies": {
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.4",
+    "shortid": "^2.2.16",
+    "uuid": "^8.3.2",
+    "valid-url": "^1.0.9",
+    "vue": "^3.2.45",
+    "vue-router": "^3.3.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.0.0"
+  },
+  "engines": {
+    "node": "14.20.1"
+  }
+}
