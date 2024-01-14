@@ -3,15 +3,11 @@ const router = express.Router();
 const validUrl = require("valid-url");
 const shortid = require("shortid");
 const { v4: uuidv4 } = require("uuid");
-const config = require("config");
-// const cors = require('cors');
+
+// const apiURL = process.env.VITE_API_URL;
+// console.log(apiURL);
+
 const Url = require("../models/Url");
-
-
-// let options = {
-//   origin: 'http://localhost:3000',
-//   optionsSuccessStatus: 200 
-// }
 
 // @route     POST /api/v1/url/shorten
 // @desc      Create short URL
@@ -19,17 +15,17 @@ router.post("/shorten", async (req, res) => {
   let genId = uuidv4();
   let id = genId.substring(0, 3).slice(0, -1);
   const longUrl = req.body.longUrl;
-  const baseUrl = config.get("baseUrl")
-  // console.log(req.body.longUrl);
+  const baseURL = "http://localhost:5173/"; //the url of the client app
+  console.log(baseURL);
 
   // Check base url
-  if (!validUrl.isUri(baseUrl)) {
+  if (!validUrl.isUri(baseURL)) {
     return res.status(401).json("Invalid base url");
   }
 
   // Create url code
   const urlCode = shortid.generate();
-  const shortUrl = baseUrl + "/" + urlCode + id;
+  const shortUrl = baseURL + "api/" + urlCode + id;
   // Check long url
   if (validUrl.isUri(longUrl)) {
     try {
@@ -38,7 +34,7 @@ router.post("/shorten", async (req, res) => {
         await url
           .updateOne({
             shortUrl,
-            urlCode: urlCode+id,
+            urlCode: urlCode + id,
           })
           .then(async () => {
             let docId = url._id;
@@ -49,12 +45,12 @@ router.post("/shorten", async (req, res) => {
         url = new Url({
           longUrl,
           shortUrl,
-          urlCode: urlCode+id,
+          urlCode: urlCode + id,
           date: new Date(),
         });
 
         await url.save();
-        await console.log("Generated new url!", url);
+        console.log("Generated new url!", url);
 
         res.json(url);
       }

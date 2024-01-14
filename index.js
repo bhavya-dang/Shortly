@@ -1,6 +1,3 @@
-// import express from 'express';
-// import connectDB from './config/db.js';
-// import cors from "cors";
 const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
@@ -9,10 +6,15 @@ const app = express();
 // Connect to database
 connectDB();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+  })
+);
+
 app.use(express.json());
 
-app.get("/status", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Server works.");
 });
 

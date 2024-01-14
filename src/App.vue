@@ -1,4 +1,4 @@
-<template id="temp">
+<template>
   <div id="app">
     <Main />
   </div>
@@ -12,18 +12,5 @@ export default {
   components: {
     Main,
   },
-  data() {
-    return {
-      // color: "#FA1C41",
-    };
-  },
 };
 </script>
-
-<style>
-
-html {
-  background: rgb(248, 234, 111)
-}
-
-</style>
