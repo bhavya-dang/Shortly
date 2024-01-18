@@ -18,6 +18,12 @@ app.get("/", (req, res) => {
   res.send("Server works.");
 });
 
+// Serve static assets in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(__dirname + "/public/"));
+
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+}
 // Define Routes
 app.use("/", require("./server/routes/index"));
 app.use("/api/v1/url", require("./server/routes/url"));

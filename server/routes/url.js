@@ -23,6 +23,7 @@ router.post("/shorten", async (req, res) => {
   // Create url code
   const urlCode = shortid.generate();
   const shortUrl = baseURL + "api/" + urlCode + id;
+
   // Check long url
   if (validUrl.isUri(longUrl)) {
     try {
@@ -52,7 +53,7 @@ router.post("/shorten", async (req, res) => {
         res.json(url);
       }
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
       res.status(500).json("Server error");
     }
   } else {
@@ -65,11 +66,7 @@ router.get("/links/:id", async (req, res) => {
   let url = await Url.findOne({ _id: id });
   if (url) {
     res.json(url);
-    // let docId = url._id;
-    // await Url.findOne({ _id: docId }).then(u => res.json(u))
-
-    // console.log(shortUrl);
-  } else return;
+  } else return res.status(404).json("No url found");
 });
 
 module.exports = router;
