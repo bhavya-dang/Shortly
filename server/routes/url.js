@@ -11,11 +11,10 @@ const Url = require("../models/Url");
 // @route     POST /api/v1/url/shorten
 // @desc      Create short URL
 router.post("/shorten", async (req, res) => {
-  console.log(req.body);
   let genId = uuidv4();
   let id = genId.substring(0, 3).slice(0, -1);
   const longUrl = req.body.longUrl;
-  const baseURL = process.env.VITE_BASE_URL; //the url of the client app
+  const baseURL = "https://shortly-site.onrender.com/"; //the url of the client app
   console.log(baseURL);
 
   // Check base url
