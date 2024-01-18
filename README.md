@@ -1,1 +1,1 @@
-code is currently breaking due to migrations
+Check `dev` branch for current development
