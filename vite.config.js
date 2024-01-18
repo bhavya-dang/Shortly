@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: process.env.VITE_API_URL, // refers to api url
+        target: "https://shortly-api-n2k1.onrender.com", // refers to api url
         changeOrigin: true,
       },
     },
