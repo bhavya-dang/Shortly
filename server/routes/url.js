@@ -3,6 +3,8 @@ const router = express.Router();
 const validUrl = require("valid-url");
 const shortid = require("shortid");
 const { v4: uuidv4 } = require("uuid");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const Url = require("../models/Url");
 
@@ -12,7 +14,7 @@ router.post("/shorten", async (req, res) => {
   let genId = uuidv4();
   let id = genId.substring(0, 3).slice(0, -1);
   const longUrl = req.body.longUrl;
-  const baseURL = "http://localhost:5173/"; //the url of the client app
+  const baseURL = process.env.VITE_BASE_URL; //the url of the client app
   console.log(baseURL);
 
   // Check base url
