@@ -4,9 +4,6 @@ const validUrl = require("valid-url");
 const shortid = require("shortid");
 const { v4: uuidv4 } = require("uuid");
 
-// const apiURL = process.env.VITE_API_URL;
-// console.log(apiURL);
-
 const Url = require("../models/Url");
 
 // @route     POST /api/v1/url/shorten

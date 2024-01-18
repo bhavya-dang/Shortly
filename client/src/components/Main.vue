@@ -16,17 +16,19 @@
         <button
           id="submitBtn"
           @click="postData"
-          class="bg-purple-500 text-white py-2 px-4 mb-4 rounded hover:bg-purple-600 transition duration-300 ease-in-out"
+          class="bg-[#219e7a] text-white py-2 px-4 mb-4 rounded hover:bg-[#46c8a3] transition duration-300 ease-in-out"
         >
           Shorten
         </button>
       </div>
       <div
-        class="flex items-center justify-center space-x-2 mt-3 bg-purple-500 text-white py-3 rounded font-inter"
+        class="flex items-center justify-center space-x-2 mt-3 bg-[#219e7a] text-white py-3 rounded font-inter"
         v-if="shortUrl !== ''"
       >
-        <p class="text-base">{{ shortUrl }}</p>
-        <span class="cursor-pointer"> <i class="fa-solid fa-copy"></i></span>
+        <p class="text-base short-url">{{ shortUrl }}</p>
+        <button @click.prevent="copy" class="cursor-pointer">
+          <i class="fa-solid fa-copy"></i>
+        </button>
         <a :href="shortUrl" target="_blank"
           ><i class="fa-solid fa-arrow-up-right-from-square"></i
         ></a>
@@ -50,6 +52,24 @@ export default {
     };
   },
   methods: {
+    copy: function () {
+      const el = document.querySelector(".short-url");
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      document.execCommand("copy");
+      sel.removeAllRanges();
+
+      // toaster message
+      this.$toast.info(`Copied!`, {
+        position: "top-right",
+      });
+
+      // Close all opened toast after 3000ms
+      setTimeout(this.$toast.clear, 3000);
+    },
     postData: async function () {
       try {
         const response = await axios.post(

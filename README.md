@@ -12,7 +12,8 @@ A simple url shortener built with MEVN stack.
 
 ## TODOs
 
-- [ ] make separate directories for **client** and **server** and refactor code
+- [x] make separate directories for **client** and **server** and refactor code
+- [x] add toaster message for copy to clipboard
 - [ ] finish revamping the UI and make it responsive for smaller devices
 - [ ] add a **copy to clipboard** button for the shortened url
 - [ ] add analytics and adsense
