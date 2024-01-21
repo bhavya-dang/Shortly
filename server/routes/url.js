@@ -7,6 +7,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const Url = require("../models/Url");
+const baseURL = "https://shortly-site.onrender.com/"; //the url of the client app
+console.log(baseURL);
 
 // @route     POST /api/v1/url/shorten
 // @desc      Create short URL
@@ -14,8 +16,6 @@ router.post("/shorten", async (req, res) => {
   let genId = uuidv4();
   let id = genId.substring(0, 3).slice(0, -1);
   const longUrl = req.body.longUrl;
-  const baseURL = "https://shortly-site.onrender.com/"; //the url of the client app
-  console.log(baseURL);
 
   // Check base url
   if (!validUrl.isUri(baseURL)) {
@@ -63,11 +63,22 @@ router.post("/shorten", async (req, res) => {
   }
 });
 
-router.get("/links/:id", async (req, res) => {
+// @route     GET /api/v1/url/link/:id
+// @desc      Get short URL data by id
+router.get("/link/:id", async (req, res) => {
   let { id } = req.params;
   let url = await Url.findOne({ _id: id });
   if (url) {
     res.json(url);
+  } else return res.status(404).json("No url found");
+});
+
+// @route     GET /api/v1/url/links
+// @desc      Get all short URLS
+router.get("/links", async (req, res) => {
+  let urls = await Url.find();
+  if (urls) {
+    res.json(urls);
   } else return res.status(404).json("No url found");
 });
 

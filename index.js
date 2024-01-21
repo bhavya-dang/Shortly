@@ -16,13 +16,16 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Server works.");
+  // console.log(__dirname);
 });
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(__dirname + "/public/"));
+  app.use(express.static(__dirname + "/server/public/"));
 
-  app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+  app.get(/.*/, (req, res) =>
+    res.sendFile(__dirname + "/server/public/index.html")
+  );
 }
 // Define Routes
 app.use("/", require("./server/routes/index"));

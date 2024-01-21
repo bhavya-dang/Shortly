@@ -26,10 +26,4 @@ router.get("/api/:code", async (req, res) => {
   }
 });
 
-// router.get("/", async (req, res) => {
-//   res.sendFile("/index.html", {
-//     root: "../Shortly - URL Shortener/urlify/public/"
-//   })
-// })
-
 module.exports = router;
