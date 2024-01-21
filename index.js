@@ -23,9 +23,9 @@ app.get("/", (req, res) => {
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(__dirname + "/server/public/"));
 
-  app.get(/.*/, (req, res) =>
-    res.sendFile(__dirname + "/server/public/index.html")
-  );
+  // app.get(/.*/, (req, res) =>
+  //   res.sendFile(__dirname + "/server/public/index.html")
+  // );
 }
 // Define Routes
 app.use("/", require("./server/routes/index"));
