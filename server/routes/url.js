@@ -7,8 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const Url = require("../models/Url");
-const baseURL = "https://shortly-site.onrender.com/"; //the url of the client app
-console.log(baseURL);
+const baseURL = "http://localhost:5173/"; //the url of the client app
 
 // @route     POST /api/v1/url/shorten
 // @desc      Create short URL
@@ -40,7 +39,7 @@ router.post("/shorten", async (req, res) => {
             let docId = url._id;
             await Url.findOne({ _id: docId }).then((u) => res.json(u));
           });
-        console.log(shortUrl);
+        // console.log(shortUrl);
       } else {
         url = new Url({
           longUrl,
@@ -50,13 +49,15 @@ router.post("/shorten", async (req, res) => {
         });
 
         await url.save();
-        console.log("Generated new url!", url);
+        // console.log("Generated new url!", url);
 
         res.json(url);
       }
     } catch (err) {
-      console.error(err.message);
-      res.status(500).json("Server error");
+      // console.error(err.message);
+      res.status(500).json({
+        message: err.message,
+      });
     }
   } else {
     res.status(401).json("Invalid long url");
@@ -78,6 +79,7 @@ router.get("/link/:id", async (req, res) => {
 router.get("/links", async (req, res) => {
   let urls = await Url.find();
   if (urls) {
+    // console.log(urls);
     res.json(urls);
   } else return res.status(404).json("No url found");
 });
