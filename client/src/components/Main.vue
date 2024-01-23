@@ -134,7 +134,7 @@ export default {
 
       try {
         const response = await axios.post(
-          `api/v1/url/shorten`,
+          `https://shortly-api-n2k1.onrender.com/api/v1/url/shorten`,
           {
             longUrl: this.url,
           },

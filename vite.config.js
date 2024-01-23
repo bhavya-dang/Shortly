@@ -9,12 +9,12 @@ export default defineConfig({
     outDir: path.resolve(__dirname, "server/public"),
   },
   plugins: [vue()],
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://localhost:3000", // refers to api url
-        changeOrigin: true,
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "https://shortly-api-n2k1.onrender.com", // refers to api url
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // },
 });

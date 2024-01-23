@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const Url = require("../models/Url");
-const baseURL = "http://localhost:5173/"; //the url of the client app
+const baseURL = "https://shortly-site.onrender.com/"; //the url of the client app
 
 // @route     POST /api/v1/url/shorten
 // @desc      Create short URL
