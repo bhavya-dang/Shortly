@@ -1,8 +1,10 @@
 <template>
   <div class="flex justify-center items-center h-screen font-mono">
     <div class="text-center w-1/2">
-      <h1 class="text-white font-bold text-6xl mb-6">Shortly!</h1>
-      <p class="text-sm text-gray-400 font-semibold mb-6">
+      <h1 class="text-black dark:text-white font-bold text-6xl mb-6">
+        Shortly!
+      </h1>
+      <p class="text-sm text-gray-400 font-semibold mb-5">
         Shorten. Simplify. Share.
       </p>
       <div class="flex items-center justify-center gap-x-2">
@@ -54,7 +56,7 @@
         </div>
       </div>
       <hr
-        class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700 w-1/2 ml-auto mr-auto"
+        class="h-px my-4 bg-gray-300 dark:bg-gray-700 border-0 w-1/2 ml-auto mr-auto"
       />
       <div>
         <p class="text-sm text-gray-400 font-semibold mt-6">
@@ -71,6 +73,21 @@
             Redirects</span
           >
         </p>
+        <p class="text-sm text-gray-400 font-semibold mt-6 space-x-1">
+          <span
+            >Fork on
+            <a
+              class="text-[#219e7a] hover:underline"
+              href="https://github.com/Sync-Codes/Shortly/tree/dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fab fa-github-alt"></i></a
+          ></span>
+          |
+          <span class="hover:cursor-pointer" @click="themeToggle"
+            ><i :class="darkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon'"></i
+          ></span>
+        </p>
       </div>
     </div>
 
@@ -79,7 +96,7 @@
       class="modal-box fixed overflow-x-hidden overflow-y-auto inset-0 flex justify-center items-center z-50"
     >
       <div class="relative mx-auto w-auto max-w-2xl">
-        <div class="bg-white w-full">
+        <div class="bg-black w-full">
           <button
             @click.prevent="toggleModal = !toggleModal"
             class="absolute top-0 right-0 mt-[0.15rem] mr-1 text-gray-500 hover:text-gray-600 transition duration-150 ease-in-out"
@@ -116,6 +133,9 @@ export default {
   mounted() {
     this.getStats();
     console.log("Component mounted.");
+
+    this.darkMode = localStorage.getItem("darkMode") === "true";
+    this.applyDarkMode();
   },
   data() {
     return {
@@ -125,14 +145,22 @@ export default {
       toggleModal: false,
       totalRedirects: 0,
       totalURLS: 0,
+      darkMode: true,
     };
   },
   methods: {
+    themeToggle: function () {
+      this.darkMode = !this.darkMode;
+      this.applyDarkMode();
+      localStorage.setItem("darkMode", this.darkMode.toString());
+    },
+    applyDarkMode: function () {
+      document.querySelector("html").classList.toggle("dark", this.darkMode);
+    },
     getStats: function () {
       axios
         .get(`${apiURL}stats`)
         .then((response) => {
-          console.log(response.data);
           this.totalRedirects = response.data.totalRedirects;
           this.totalURLS = response.data.totalUrls;
         })
