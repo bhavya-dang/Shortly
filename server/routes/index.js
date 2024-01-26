@@ -32,7 +32,6 @@ router.get("/api/:code", async (req, res) => {
 router.get("/stats", async (req, res) => {
   try {
     const totalUrls = await Url.countDocuments();
-    console.log(totalUrls);
 
     if (totalUrls) {
       return res.json({

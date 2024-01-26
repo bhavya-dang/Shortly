@@ -77,7 +77,6 @@ router.get("/link/:id", async (req, res) => {
 router.get("/links", async (req, res) => {
   let urls = await Url.find();
   if (urls) {
-    // console.log(urls);
     res.json(urls);
   } else return res.status(404).json("No url found");
 });

@@ -12,16 +12,6 @@ A simple url shortener built with MEVN stack.
 - **Client Deployment:** Render
 - **Server Deployment:** Fly
 
-## API Usage
-
-> The API is deployed at [https://shortly.fly.dev/](https://shortly.fly.dev/)
-
-```bash
-# Shorten the url
-POST https://shortly.fly.dev/api/v1/url/shorten
-{ "longUrl": "https://www.google.com/" }
-```
-
 ## TODOs
 
 - [x] make separate directories for **client** and **server** and refactor code
