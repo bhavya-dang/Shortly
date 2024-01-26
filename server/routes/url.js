@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const Url = require("../models/Url");
-const baseURL = "https://shortly-site.onrender.com/"; //the url of the client app
+const apiURL = "https://shortly.fly.dev/";
 
 // @route     POST /api/v1/url/shorten
 // @desc      Create short URL
@@ -17,13 +17,13 @@ router.post("/shorten", async (req, res) => {
   const longUrl = req.body.longUrl;
 
   // Check base url
-  if (!validUrl.isUri(baseURL)) {
-    return res.status(401).json("Invalid base url");
-  }
+  // if (!validUrl.isUri(baseURL)) {
+  //   return res.status(401).json("Invalid base url");
+  // }
 
   // Create url code
   const urlCode = shortid.generate();
-  const shortUrl = baseURL + "api/" + urlCode + id;
+  const shortUrl = apiURL + "api/" + urlCode + id;
 
   // Check long url
   if (validUrl.isUri(longUrl)) {
@@ -39,22 +39,20 @@ router.post("/shorten", async (req, res) => {
             let docId = url._id;
             await Url.findOne({ _id: docId }).then((u) => res.json(u));
           });
-        // console.log(shortUrl);
       } else {
         url = new Url({
           longUrl,
           shortUrl,
           urlCode: urlCode + id,
+          redirects: 0,
           date: new Date(),
         });
 
         await url.save();
-        // console.log("Generated new url!", url);
 
         res.json(url);
       }
     } catch (err) {
-      // console.error(err.message);
       res.status(500).json({
         message: err.message,
       });

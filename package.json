@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "db": "node index.js"
+    "db": "node index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "@meforma/vue-toaster": "^1.3.0",

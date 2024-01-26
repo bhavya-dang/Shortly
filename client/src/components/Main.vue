@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center h-screen font-mono">
-    <div class="text-center w-1/3">
+    <div class="text-center w-1/2">
       <h1 class="text-white font-bold text-6xl mb-6">Shortly!</h1>
       <p class="text-sm text-gray-400 font-semibold mb-6">
         Shorten. Simplify. Share.
@@ -23,7 +23,7 @@
         </button>
       </div>
       <div
-        class="flex items-center justify-evenly mt-3 bg-[#219e7a] text-white py-3 rounded"
+        class="flex items-center justify-evenly mt-3 bg-[#219e7a] text-white py-3 rounded w-full"
         v-if="shortUrl.length > 0"
       >
         <p class="text-base short-url">{{ shortUrl }}</p>
@@ -52,6 +52,25 @@
             <i class="fa-solid fa-qrcode"></i>
           </button>
         </div>
+      </div>
+      <hr
+        class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700 w-1/2 ml-auto mr-auto"
+      />
+      <div>
+        <p class="text-sm text-gray-400 font-semibold mt-6">
+          Developed by
+          <a
+            href="https://github.com/Sync-Codes"
+            target="_blank"
+            class="text-[#219e7a] hover:underline"
+            >Sync</a
+          >
+          |
+          <span class="text-sm text-gray-400 font-semibold mt-6"
+            >{{ totalURLS }} URLs Shortened | {{ totalRedirects }} Total
+            Redirects</span
+          >
+        </p>
       </div>
     </div>
 
@@ -87,12 +106,15 @@
 <script>
 import axios from "axios";
 import QrcodeVue from "qrcode.vue";
+
+const apiURL = "https://shortly.fly.dev/";
 export default {
   name: "Main",
   components: {
     QrcodeVue,
   },
   mounted() {
+    this.getStats();
     console.log("Component mounted.");
   },
   data() {
@@ -101,9 +123,23 @@ export default {
       output: "",
       shortUrl: "",
       toggleModal: false,
+      totalRedirects: 0,
+      totalURLS: 0,
     };
   },
   methods: {
+    getStats: function () {
+      axios
+        .get(`${apiURL}stats`)
+        .then((response) => {
+          console.log(response.data);
+          this.totalRedirects = response.data.totalRedirects;
+          this.totalURLS = response.data.totalUrls;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     copy: function () {
       const el = document.querySelector(".short-url");
       const range = document.createRange();
@@ -134,7 +170,7 @@ export default {
 
       try {
         const response = await axios.post(
-          `https://shortly-api-n2k1.onrender.com/api/v1/url/shorten`,
+          `${apiURL}api/v1/url/shorten`,
           {
             longUrl: this.url,
           },

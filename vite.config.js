@@ -12,7 +12,7 @@ export default defineConfig({
   // server: {
   //   proxy: {
   //     "/api": {
-  //       target: "https://shortly-api-n2k1.onrender.com", // refers to api url
+  //       target: "http://localhost:3000/", // refers to api url
   //       changeOrigin: true,
   //     },
   //   },
