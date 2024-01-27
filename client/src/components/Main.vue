@@ -55,6 +55,16 @@
           </button>
         </div>
       </div>
+
+      <div v-if="loading" class="flex space-x-2 justify-center items-center">
+        <div
+          class="h-4 w-4 bg-[#219e7a] rounded-full animate-bounce [animation-delay:-0.3s]"
+        ></div>
+        <div
+          class="h-4 w-4 bg-[#219e7a] rounded-full animate-bounce [animation-delay:-0.15s]"
+        ></div>
+        <div class="h-4 w-4 bg-[#219e7a] rounded-full animate-bounce"></div>
+      </div>
       <hr
         class="h-px my-4 bg-gray-300 dark:bg-gray-700 border-0 w-1/2 ml-auto mr-auto"
       />
@@ -146,6 +156,7 @@ export default {
       totalRedirects: 0,
       totalURLS: 0,
       darkMode: true,
+      loading: false,
     };
   },
   methods: {
@@ -187,6 +198,11 @@ export default {
       setTimeout(this.$toast.clear, 3000);
     },
     postData: async function () {
+      if (this.shortUrl.length > 0) {
+        this.shortUrl = "";
+      }
+
+      this.loading = true;
       if (this.url === "") {
         this.$toast.error(`Please enter a valid URL!`, {
           position: "top-right",
@@ -212,6 +228,7 @@ export default {
         );
         this.shortUrl = response.data.shortUrl;
         this.url = "";
+        this.loading = false;
         // console.log(response.data);
       } catch (error) {
         if (error.response.status === 400) {

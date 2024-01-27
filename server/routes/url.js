@@ -16,11 +16,6 @@ router.post("/shorten", async (req, res) => {
   let id = genId.substring(0, 3).slice(0, -1);
   const longUrl = req.body.longUrl;
 
-  // Check base url
-  // if (!validUrl.isUri(baseURL)) {
-  //   return res.status(401).json("Invalid base url");
-  // }
-
   // Create url code
   const urlCode = shortid.generate();
   const shortUrl = apiURL + "api/" + urlCode + id;
